@@ -8,6 +8,17 @@ def statement_generator(text, decoration) :
 
     return ""
 
+def instructions():
+
+    statement_generator("Instructions / Information", "=")
+    print()
+    print("Please choose a data type (image / text / integer)")
+    print("This program assumes that images are being represented in 24 bit colour (ie:24 bits per pixel). For text, we assume that ascii encoding is being used (8 bits per character).")
+    print()
+    print("Complete as many calculations as necessary, pressing <enter> at the end of each calculation or any key to quit")
+    print()
+    return ""
+
 def user_choice():
 
     text_ok = ["text", "t", "txt"]
@@ -64,24 +75,66 @@ def num_check(question, low):
         except ValueError:
            print(error)
 
+def text_bits():
+    print()
+    var_text = input("Enter some text: ")
+    var_length = len(var_text)
+    num_bits = 8 * var_length
 
+    print("\'{}\' has {} characters ...".format(var_text, var_length))
+    print("# of  bits is {}  x 8...".format(var_length))
+    print("We need {} bits to represent {}".format(num_bits, var_text))
+    print()
+
+    return ""
+
+def image_bits():
+
+    image_width =  num_check("Image Width ", 1)
+    image_height = num_check("Image height", 1)
+
+    num_pixels =  image_width * image_height
+
+    num_bits = num_pixels * 24
+    print()
+    print("# of pixels =  {} x {} = {}".format(image_height,
+                                            image_width, num_pixels))
+    print("# bits = {} x 24 = {}".format(num_pixels,    num_bits))
+    print()
+
+    return ""
+
+def int_bits():
+    var_integer = num_check("Please enter an integer: ", 0)
+    var_binary =  "{0:b}".format(var_integer)
+    num_bits = len(var_integer)
+    print()
+    print("{} in binary is {}".format(var_integer, var_binary))
+    print("# of bits is {}".format(num_bits))
+
+    return ""
 
 
 statement_generator("Bit Calculator for integers, text and images", "-")
 
+first_time = input("Press <enter> to see the instructions or any key to continue")
+
+if first_time == "":
+    instructions()
+
 keep_going = ""
 while keep_going == "":
+   
     data_type = user_choice()
     print("You chose", data_type)
 
     print()
     
     if data_type =="integer":
-        var_integer = num_check("Enter an integer: ", 0)
+        int_bits()
     
     elif data_type == "image":
-        image_width = num_check("image_width", 1)
-        image_height = num_check("image_height", 1)
+        image_bits()
 
     else:
-        var_text = input("Enter some Text. ")
+       text_bits()
